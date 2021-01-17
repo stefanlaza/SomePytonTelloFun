@@ -1,13 +1,12 @@
 from djitellopy import tello
 import pygame
 import KeyboardModule as km
-from time import sleep
 import cv2
 
-white = (255,255,255);
+white = (255,255,255)
 green = (0, 255, 0)
 blue = (0, 0, 128)
-win = pygame.display.set_mode((1280,768))
+win = pygame.display.set_mode((300,240))
 pygame.display.set_caption('DroneMetrics')
 pygame.font.init()
 myfont = pygame.font.SysFont('Helvetica', 20)
@@ -16,6 +15,7 @@ wifisurface = myfont.render('Wifi:' + '' + '%', False, (0, 0, 0))
 attitudesurface = myfont.render('Attitude:' + '' + '%', False, (0, 0, 0))
 barometersurface = myfont.render('Barometer:' + '' + '%', False, (0, 0, 0))
 flighttimesurface = myfont.render('Flighttime:' + '' + '%', False, (0, 0, 0))
+win.fill(white)
 
 km.init()
 drone = tello.Tello()
@@ -63,7 +63,7 @@ while True:
     vals = getKeyboardInput()
     drone.send_rc_control(vals[0],vals[1],vals[2],vals[3])
     cam = drone.get_frame_read().frame
-    cam = cv2.resize(cam,(800,600))
+    cam = cv2.resize(cam,(320,240))
     cv2.imshow("Drone Cam",cam)
     cv2.waitKey(1)
     pygame.display.update()
